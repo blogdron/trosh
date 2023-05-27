@@ -1,6 +1,6 @@
+
 function love.load()
-	love.graphics.setDefaultImageFilter("nearest", "nearest")
-	
+    love.graphics.setDefaultFilter( "nearest", "nearest")
 	require "class"
 	require "menu"
 	require "cloud"
@@ -23,8 +23,9 @@ function love.load()
 	require "asteroid"
 	require "bullet"
 	require "bird"
-	
-	love.graphics.setIcon( love.graphics.newImage("graphics/icon.png") )
+
+	love.window.setIcon( love.image.newImageData("graphics/icon.png") )
+
 	imagelist = {"title", "cloud1", "cloud2", "ground", "bush1", "bush2", "powerup", "rocket", "star", "asteroid-big1", "sunglasses", "awesome", "arrow", "groundwin",
 				"asteroid-big2", "asteroid-small1", "asteroid-small2", "bullet", "littleexplosion", "warning", "wheatley", "alert", "randomshit", "bird"}
 	
@@ -82,13 +83,13 @@ function love.load()
 	birdquad = {love.graphics.newQuad(0, 0, 29, 16, 29, 32), love.graphics.newQuad(0, 16, 29, 16, 29, 32)}
 	
 	scale = 8
-	local w, h = love.graphics.getMode()
+	local w, h = love.window.getMode()
 	if w ~= 100*scale or h ~= 80*scale then
 		love.graphics.setMode(100*scale, 80*scale, false, true, 16)
 	end
-	love.graphics.setIcon( love.graphics.newImage("graphics/icon.png") )
+	love.window.setIcon( love.image.newImageData("graphics/icon.png") )
 	
-	bgmusic = love.audio.newSource("audio/trosong.ogg")
+	bgmusic = love.audio.newSource("audio/trosong.ogg","stream")
 	bgmusic:setLooping(true)
 	lasersound = love.audio.newSource("audio/laser.wav", "static")
 	bigexplosionsound = love.audio.newSource("audio/bigexplosion.ogg", "static")
@@ -99,7 +100,7 @@ function love.load()
 	sunglassessound = love.audio.newSource("audio/sunglasses.ogg", "static")
 	splat = love.audio.newSource("audio/splat.ogg", "static")
 	ding = love.audio.newSource("audio/ding.ogg", "static")
-	credits = love.audio.newSource("audio/credits.ogg")
+	credits = love.audio.newSource("audio/credits.ogg","stream")
 	approach = love.audio.newSource("audio/approach.ogg", "static")
 	credits:setLooping(true)
 	
@@ -267,7 +268,7 @@ function properprint(s, x, y, sc)
 		else
 			local char = string.sub(s, i, i)
 			if fontquads[char] then
-				love.graphics.drawq(fontimage, fontquads[char], x*scale+((i-1)*8+1)*sc, y*scale, 0, sc, sc)
+				love.graphics.draw(fontimage, fontquads[char], x*scale+((i-1)*8+1)*sc, y*scale, 0, sc, sc)
 			end
 		end
 	end
